@@ -29,16 +29,25 @@ class Matrix:
                     result.matrix[i][j] = mat1.matrix[i][j] + mat2.matrix[i][j]
             result.print_mat()
 
-        # BODY
+    @staticmethod
+    def mat_scal(mat1, scal):
+        result = Matrix(mat1.row, mat1.column)
+        result.matrix = [[0 for i in range(result.column)] for j in range(result.row)]
+        for i in range(result.row):
+            for j in range(result.column):
+                result.matrix[i][j] = mat1.matrix[i][j] * scal
+        result.print_mat()
 
+# BODY
 
 a, b = map(int, input().split())
 A = Matrix(a, b)
 A.read_mat()
-
-a, b = map(int, input().split())
-B = Matrix(a, b)
-B.read_mat()
-
-Matrix.mat_add(A, B)
+c = int(input())
+Matrix.mat_scal(A, c)
+# a, b = map(int, input().split())
+# B = Matrix(a, b)
+# B.read_mat()
+#
+# Matrix.mat_add(A, B)
 
