@@ -219,27 +219,9 @@ files:
     print('Hello, World!')
   learner_created: false
 feedback_link: https://hyperskill.org/projects/96/stages/528/implement
-status: Failed
+status: Solved
 feedback:
-  message: |-
-    Exception in test #1
-
-    Traceback (most recent call last):
-      File "processor.py", line 25, in <module>
-        A.read_mat()
-      File "processor.py", line 15, in read_mat
-        row[i] = a
-    IndexError: list assignment index out of range
-
-    Please find below the output of your program during this failed test.
-    Note that the '>' character indicates the beginning of the input line.
-
-    ---
-
-    > 4 5
-    4 5
-    0
-    > 1 2 3 4 5
-    <map object at 0x0000024B4FDC8940>
-  time: Thu, 16 Jul 2020 12:54:56 UTC
+  message: Congratulations! Continue on <a href="https://hyperskill.org/projects/96/stages/528/implement">JetBrains
+    Academy</a>
+  time: Thu, 16 Jul 2020 19:07:57 UTC
 record: -1
