@@ -84,9 +84,9 @@ class Processor:
             Matrix.v_line_trans(A)
         elif trans_selection == 4:
             Matrix.h_line_trans(A)
-        elif trans_selection == 0:
-            print('Bye')
-            exit()
+        #  elif trans_selection == 0:
+        #     print('Bye')
+        #     return
         else:
             print('Invalid selection')
             # continue
@@ -158,7 +158,25 @@ class Matrix:
         result.matrix = [[0 for i in range(result.column)] for j in range(result.row)]
         for i in range(result.row):
             for j in range(result.column):
-                result.matrix[i][j] = mat1.matrix[i][j]
+                result.matrix[i][j] = mat1.matrix[-j - 1][-i - 1]
+        result.print_mat()
+
+    @staticmethod
+    def v_line_trans(mat1):
+        result = Matrix(mat1.row, mat1.column)
+        result.matrix = [[0 for i in range(result.column)] for j in range(result.row)]
+        for i in range(result.row):
+            for j in range(result.column):
+                result.matrix[i][j] = mat1.matrix[i][-j - 1]
+        result.print_mat()
+
+    @staticmethod
+    def h_line_trans(mat1):
+        result = Matrix(mat1.row, mat1.column)
+        result.matrix = [[0 for i in range(result.column)] for j in range(result.row)]
+        for i in range(result.row):
+            for j in range(result.column):
+                result.matrix[i][j] = mat1.matrix[-i - 1][j]
         result.print_mat()
 
 
