@@ -6,6 +6,7 @@ class Processor:
                    '2.': 'Multiply matrix by a constant',
                    '3.': 'Multiply matrices',
                    '4.': 'Transpose matrix',
+                   '5.': 'Calculate a determinant',
                    '0.': 'Exit'}
         while True:
             for k, v in choices.items():
@@ -22,6 +23,8 @@ class Processor:
                     self.multi_mat()
                 elif Processor.selection == 4:
                     self.trans_mat()
+                elif Processor.selection == 5:
+                    self.det_mat()
                 elif Processor.selection == 0:
                     print('Bye')
                     exit()
@@ -91,6 +94,12 @@ class Processor:
             print('Invalid selection')
             # continue
 
+    def det_mat(self):
+        a, b = map(int, input('Enter matrix size: ').split())
+        A = Matrix(a, b)
+        print('Enter matrix:')
+        A.read_mat()
+        Matrix.determinant(A, 1)
 
 class Matrix:
     def __init__(self, row, column):
@@ -178,6 +187,45 @@ class Matrix:
             for j in range(result.column):
                 result.matrix[i][j] = mat1.matrix[-i - 1][j]
         result.print_mat()
+
+    @staticmethod
+    def determinant(matrix):
+        # result = Matrix(mat1.row, mat1.column)
+        # result.matrix = [[0 for i in range(result.column)] for j in range(result.row)]
+        # for i in range(result.row):
+        #     for j in range(result.column):
+        #         result.matrix[i][j] = mat1.matrix[i][j]
+        # result.print_mat()
+        def determinant_recursive(A, total=0):
+            # Section 1: store indices in list for row referencing
+            indices = list(range(len(A)))
+
+            # Section 2: when at 2x2 submatrices recursive calls end
+            if len(A) == 2 and len(A[0]) == 2:
+                val = A[0][0] * A[1][1] - A[1][0] * A[0][1]
+                return val
+
+            # Section 3: define submatrix for focus column and
+            #      call this function
+            for fc in indices:  # A) for each focus column, ...
+                # find the submatrix ...
+                As = copy_matrix(A)  # B) make a copy, and ...
+                As = As[1:]  # ... C) remove the first row
+                height = len(As)  # D)
+
+                for i in range(height):
+                    # E) for each remaining row of submatrix ...
+                    #     remove the focus column elements
+                    As[i] = As[i][0:fc] + As[i][fc + 1:]
+
+                sign = (-1) ** (fc % 2)  # F)
+                # G) pass submatrix recursively
+                sub_det = determinant_recursive(As)
+                # H) total all returns from recursion
+                total += sign * A[0][fc] * sub_det
+
+            return total
+
 
 
 # BODY
