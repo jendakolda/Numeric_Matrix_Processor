@@ -403,5 +403,100 @@ files:
     print('Hello, World!')
   learner_created: false
 feedback_link: https://hyperskill.org/projects/96/stages/531/implement
-status: Unchecked
-record: -1
+status: Failed
+feedback:
+  message: |-
+    Exception in test #1
+
+    Probably your program run out of input (tried to read more than expected)
+
+    Traceback (most recent call last):
+      File "processor.py", line 167, in <module>
+        start.main()
+      File "processor.py", line 14, in main
+        Processor.selection = input('Your choice: ')
+    EOFError: EOF when reading a line
+
+    Please find below the output of your program during this failed test.
+    Note that the '>' character indicates the beginning of the input line.
+
+    ---
+
+    1. Add Matrices
+    2. Multiply matrix by a constant
+    3. Multiply matrices
+    4. Transpose matrix
+    0. Exit
+    Your choice: > 4 5
+    Invalid selection
+    1. Add Matrices
+    2. Multiply matrix by a constant
+    3. Multiply matrices
+    4. Transpose matrix
+    0. Exit
+    Your choice: > 1 2 3 4 5
+    Invalid selection
+    1. Add Matrices
+    2. Multiply matrix by a constant
+    3. Multiply matrices
+    4. Transpose matrix
+    0. Exit
+    Your choice: > 3 2 3 2 1
+    Invalid selection
+    1. Add Matrices
+    2. Multiply matrix by a constant
+    3. Multiply matrices
+    4. Transpose matrix
+    0. Exit
+    Your choice: > 8 0 9 9 1
+    Invalid selection
+    1. Add Matrices
+    2. Multiply matrix by a constant
+    3. Multiply matrices
+    4. Transpose matrix
+    0. Exit
+    Your choice: > 1 3 4 5 6
+    Invalid selection
+    1. Add Matrices
+    2. Multiply matrix by a constant
+    3. Multiply matrices
+    4. Transpose matrix
+    0. Exit
+    Your choice: > 4 5
+    Invalid selection
+    1. Add Matrices
+    2. Multiply matrix by a constant
+    3. Multiply matrices
+    4. Transpose matrix
+    0. Exit
+    Your choice: > 1 1 4 4 5
+    Invalid selection
+    1. Add Matrices
+    2. Multiply matrix by a constant
+    3. Multiply matrices
+    4. Transpose matrix
+    0. Exit
+    Your choice: > 4 4 5 7 8
+    Invalid selection
+    1. Add Matrices
+    2. Multiply matrix by a constant
+    3. Multiply matrices
+    4. Transpose matrix
+    0. Exit
+    Your choice: > 1 2 3 9 8
+    Invalid selection
+    1. Add Matrices
+    2. Multiply matrix by a constant
+    3. Multiply matrices
+    4. Transpose matrix
+    0. Exit
+    Your choice: > 1 0 0 0 1
+    Invalid selection
+    1. Add Matrices
+    2. Multiply matrix by a constant
+    3. Multiply matrices
+    4. Transpose matrix
+    0. Exit
+    Your choice:
+  time: Fri, 17 Jul 2020 06:53:46 UTC
+record: 6
