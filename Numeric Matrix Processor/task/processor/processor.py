@@ -99,7 +99,44 @@ class Processor:
         A = Matrix(a, b)
         print('Enter matrix:')
         A.read_mat()
-        Matrix.determinant(A, 1)
+        print(determinant_recursive(A.matrix), '\n')
+
+
+def copy_matrix(A):
+    return A
+
+
+def determinant_recursive(A, total=0):
+    # Section 1: store indices in list for row referencing
+    indices = list(range(len(A)))
+    if len(A) == 1:
+        return A[0][0]
+    # Section 2: when at 2x2 submatrices recursive calls end
+    elif len(A) == 2 and len(A[0]) == 2:
+        val = A[0][0] * A[1][1] - A[1][0] * A[0][1]
+        return val
+
+    # Section 3: define submatrix for focus column and
+    #      call this function
+    for fc in indices:  # A) for each focus column, ...
+        # find the submatrix ...
+        As = copy_matrix(A)  # B) make a copy, and ...
+        As = As[1:]  # ... C) remove the first row
+        height = len(As)  # D)
+
+        for i in range(height):
+            # E) for each remaining row of submatrix ...
+            #     remove the focus column elements
+            As[i] = As[i][0:fc] + As[i][fc + 1:]
+
+        sign = (-1) ** (fc % 2)  # F)
+        # G) pass submatrix recursively
+        sub_det = determinant_recursive(As)
+        # H) total all returns from recursion
+        total += sign * A[0][fc] * sub_det
+
+    return total
+
 
 class Matrix:
     def __init__(self, row, column):
@@ -189,43 +226,40 @@ class Matrix:
         result.print_mat()
 
     @staticmethod
-    def determinant(matrix):
-        # result = Matrix(mat1.row, mat1.column)
-        # result.matrix = [[0 for i in range(result.column)] for j in range(result.row)]
-        # for i in range(result.row):
-        #     for j in range(result.column):
-        #         result.matrix[i][j] = mat1.matrix[i][j]
-        # result.print_mat()
-        def determinant_recursive(A, total=0):
-            # Section 1: store indices in list for row referencing
-            indices = list(range(len(A)))
+    def m_diag_trans(mat1):
+        result = Matrix(mat1.column, mat1.row)
+        result.matrix = [[0 for i in range(result.column)] for j in range(result.row)]
+        for i in range(result.row):
+            for j in range(result.column):
+                result.matrix[i][j] = mat1.matrix[j][i]
+        result.print_mat()
 
-            # Section 2: when at 2x2 submatrices recursive calls end
-            if len(A) == 2 and len(A[0]) == 2:
-                val = A[0][0] * A[1][1] - A[1][0] * A[0][1]
-                return val
+    @staticmethod
+    def s_diag_trans(mat1):
+        result = Matrix(mat1.column, mat1.row)
+        result.matrix = [[0 for i in range(result.column)] for j in range(result.row)]
+        for i in range(result.row):
+            for j in range(result.column):
+                result.matrix[i][j] = mat1.matrix[-j - 1][-i - 1]
+        result.print_mat()
 
-            # Section 3: define submatrix for focus column and
-            #      call this function
-            for fc in indices:  # A) for each focus column, ...
-                # find the submatrix ...
-                As = copy_matrix(A)  # B) make a copy, and ...
-                As = As[1:]  # ... C) remove the first row
-                height = len(As)  # D)
+    @staticmethod
+    def v_line_trans(mat1):
+        result = Matrix(mat1.row, mat1.column)
+        result.matrix = [[0 for i in range(result.column)] for j in range(result.row)]
+        for i in range(result.row):
+            for j in range(result.column):
+                result.matrix[i][j] = mat1.matrix[i][-j - 1]
+        result.print_mat()
 
-                for i in range(height):
-                    # E) for each remaining row of submatrix ...
-                    #     remove the focus column elements
-                    As[i] = As[i][0:fc] + As[i][fc + 1:]
-
-                sign = (-1) ** (fc % 2)  # F)
-                # G) pass submatrix recursively
-                sub_det = determinant_recursive(As)
-                # H) total all returns from recursion
-                total += sign * A[0][fc] * sub_det
-
-            return total
-
+    @staticmethod
+    def h_line_trans(mat1):
+        result = Matrix(mat1.row, mat1.column)
+        result.matrix = [[0 for i in range(result.column)] for j in range(result.row)]
+        for i in range(result.row):
+            for j in range(result.column):
+                result.matrix[i][j] = mat1.matrix[-i - 1][j]
+        result.print_mat()
 
 
 # BODY
