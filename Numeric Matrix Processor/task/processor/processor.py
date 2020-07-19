@@ -7,6 +7,7 @@ class Processor:
                    '3.': 'Multiply matrices',
                    '4.': 'Transpose matrix',
                    '5.': 'Calculate a determinant',
+                   '6.': 'Inverse matrix',
                    '0.': 'Exit'}
         while True:
             for k, v in choices.items():
@@ -25,6 +26,8 @@ class Processor:
                     self.trans_mat()
                 elif Processor.selection == 5:
                     self.det_mat()
+                elif Processor.selection == 6:
+                    self.inv_mat()
                 elif Processor.selection == 0:
                     print('Bye')
                     exit()
@@ -87,9 +90,6 @@ class Processor:
             Matrix.v_line_trans(A)
         elif trans_selection == 4:
             Matrix.h_line_trans(A)
-        #  elif trans_selection == 0:
-        #     print('Bye')
-        #     return
         else:
             print('Invalid selection')
             # continue
@@ -100,6 +100,18 @@ class Processor:
         print('Enter matrix:')
         A.read_mat()
         print(determinant_recursive(A.matrix), '\n')
+
+
+    def inv_mat(self):
+        a, b = map(int, input('Enter matrix size: ').split())
+        A = Matrix(a, b)
+
+        print('Enter matrix:')
+        A.read_mat()
+        if not A.check_squareness():
+            print('Matrix is not square')
+            return
+        Matrix.inversion(A)
 
 
 def copy_matrix(A):
@@ -154,6 +166,9 @@ class Matrix:
         for i in range(self.row):
             print(*self.matrix[i][:])
         print()
+
+    def check_squareness(self):
+        return True if self.row == self.column else False
 
     @staticmethod
     def mat_add(mat1, mat2):
@@ -260,6 +275,13 @@ class Matrix:
             for j in range(result.column):
                 result.matrix[i][j] = mat1.matrix[-i - 1][j]
         result.print_mat()
+
+    @staticmethod
+    def inversion(mat1):
+        determinant = determinant_recursive(A.matrix)
+        C_matrix = build_c_matrix
+        C_trans = m_diag_trans(C_matrix)
+        A = mat_scal(C_matrix, 1 / determinant)
 
 
 # BODY
