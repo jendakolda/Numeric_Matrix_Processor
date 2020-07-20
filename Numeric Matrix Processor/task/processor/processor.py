@@ -101,15 +101,14 @@ class Processor:
         A.read_mat()
         print(determinant_recursive(A.matrix), '\n')
 
-
     def inv_mat(self):
         a, b = map(int, input('Enter matrix size: ').split())
         A = Matrix(a, b)
 
         print('Enter matrix:')
         A.read_mat()
-        if not A.check_squareness():
-            print('Matrix is not square')
+        if not A.check_squareness() or determinant_recursive(A.matrix) == 0:
+            print('Inverse matrix cannot be obtained')
             return
         Matrix.inversion(A)
 
@@ -148,6 +147,76 @@ def determinant_recursive(A, total=0):
         total += sign * A[0][fc] * sub_det
 
     return total
+
+
+# ------------------------------------------------------------------
+# Matrix of COFACTORS
+def build_c_matrix(A, total=0):
+    # Section 1: store indices in list for row referencing
+    indices = list(range(len(A)))
+
+
+    # Section 3: define submatrix for focus column and
+    #      call this function
+    for fc in indices:  # A) for each focus column, ...
+        # find the submatrix ...
+        As = copy_matrix(A)  # B) make a copy, and ...
+        As = As[1:]  # ... C) remove the first row
+        height = len(As)  # D)
+
+        for i in range(height):
+            # E) for each remaining row of submatrix ...
+            #     remove the focus column elements
+            As[i] = As[i][0:fc] + As[i][fc + 1:]
+
+        sign = (-1) ** (fc % 2)  # F)
+        # G) pass submatrix recursively
+        sub_det = determinant_recursive(As)
+        # H) total all returns from recursion
+        total += sign * A[0][fc] * sub_det
+
+    return total
+# ---------------------------------------------------------
+# def invert_matrix(A, tol=None):
+#     """
+#     Returns the inverse of the passed in matrix.
+#         :param A: The matrix to be inversed
+#
+#         :return: The inverse of the matrix A
+#     """
+#     # Section 1: Make sure A can be inverted.
+#     check_squareness(A)
+#     check_non_singular(A)
+#
+#     # Section 2: Make copies of A & I, AM & IM, to use for row ops
+#     n = len(A)
+#     AM = copy_matrix(A)
+#     I = identity_matrix(n)
+#     IM = copy_matrix(I)
+#
+#     # Section 3: Perform row operations
+#     indices = list(range(n))  # to allow flexible row referencing ***
+#     for fd in range(n):  # fd stands for focus diagonal
+#         fdScaler = 1.0 / AM[fd][fd]
+#         # FIRST: scale fd row with fd inverse.
+#         for j in range(n):  # Use j to indicate column looping.
+#             AM[fd][j] *= fdScaler
+#             IM[fd][j] *= fdScaler
+#         # SECOND: operate on all rows except fd row as follows:
+#         for i in indices[0:fd] + indices[fd + 1:]:
+#             # *** skip row with fd in it.
+#             crScaler = AM[i][fd]  # cr stands for "current row".
+#             for j in range(n):
+#                 # cr - crScaler * fdRow, but one element at a time.
+#                 AM[i][j] = AM[i][j] - crScaler * AM[fd][j]
+#                 IM[i][j] = IM[i][j] - crScaler * IM[fd][j]
+#
+#     # Section 4: Make sure IM is an inverse of A with specified tolerance
+#     if check_matrix_equality(I, matrix_multiply(A, IM), tol):
+#         return IM
+#     else:
+#         raise ArithmeticError("Matrix inverse out of tolerance.")
+
 
 
 class Matrix:
@@ -278,10 +347,10 @@ class Matrix:
 
     @staticmethod
     def inversion(mat1):
-        determinant = determinant_recursive(A.matrix)
+        determinant = determinant_recursive(mat1.matrix)
         C_matrix = build_c_matrix
-        C_trans = m_diag_trans(C_matrix)
-        A = mat_scal(C_matrix, 1 / determinant)
+        C_trans = Matrix.m_diag_trans(C_matrix)
+        A = Matrix.mat_scal(C_trans, 1 / determinant)
 
 
 # BODY
